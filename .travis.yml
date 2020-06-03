@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 11.6.0
+  - 14.2.0
 cache: npm
 
 install:
@@ -14,5 +14,6 @@ deploy:
   provider: pages
   skip-cleanup: true
   github-token: $github_token
+  local_dir: build
   on:
     branch: master
