@@ -2,7 +2,7 @@
   "name": "hacker-news",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ShreyasAru nkumar.github.io/hacker-news",
+  "homepage": "https://ShreyasArunkumar.github.io/hacker-news",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
