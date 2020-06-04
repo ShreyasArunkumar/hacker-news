@@ -5,14 +5,41 @@ import Button from "./FormComponents/Button";
 import Input from "./FormComponents/Input";
 import NewsTable from "./Table";
 import { checkInLocalStorage, setInLocalStorage } from "./utils";
+import Chart from "react-apexcharts";
 
-interface INews {}
+export interface ChartOption {
+  chart?: object;
+  stroke?: object;
+  grid?: object;
+  dataLabels?: object;
+  theme?: object;
+  fill?: object;
+  tooltip?: object;
+  labels?: object;
+  legend?: object;
+  toolbar?: object;
+  markers?: object;
+  xaxis?: object;
+  yaxis?: object;
+  title?: object;
+  colors?: object;
+  plotOptions?: object;
+}
+
+export interface ChartData {
+  name?: string;
+  data: any;
+}
 
 export default function index() {
+  const op: ChartOption = {};
+  const se: ChartData[] = [];
+
   const [news, setNews] = useState<any>([]);
   const [searchString, setSearchString] = useState("react");
-  // const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
+  const [options, updateOptions] = useState(op);
+  const [series, updateSeries] = useState(se);
 
   async function getNews() {
     try {
@@ -22,19 +49,72 @@ export default function index() {
       res = await res.json();
       setInLocalStorage(searchString + page, JSON.stringify(res.hits));
       setNews(res.hits);
+      updateCharts(res.hits);
       // setLoading(false);
     } catch (err) {
       console.log(err);
     }
   }
 
+  function updateCharts(response: []) {
+    let data: Array<number> = [];
+    let categories: Array<string> = [];
+
+    response.forEach((a: { points: number; author: string }) => {
+      data.push(a.points);
+      categories.push(a.author);
+    });
+
+    updateOptions({
+      dataLabels: {
+        show: true,
+      },
+      toolbar: {
+        show: true,
+      },
+      grid: {
+        show: true,
+      },
+      stroke: {
+        width: 3,
+        curve: "straight",
+      },
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: "#f06506",
+        },
+      },
+      yaxis: {
+        labels: {
+          formatter: (a: number) => a,
+        },
+      },
+      xaxis: {
+        categories,
+        labels: {
+          show: true,
+        },
+      },
+    });
+
+    updateSeries([
+      {
+        name: "Votes",
+        data,
+      },
+    ]);
+  }
+
   function checkNews() {
     // setLoading(true);
-    const res = checkInLocalStorage(searchString + page);
+    let res = checkInLocalStorage(searchString + page);
     if (res === null) {
       getNews();
     } else {
-      setNews(JSON.parse(res));
+      res = JSON.parse(res);
+      setNews(res);
+      updateCharts(res);
     }
   }
 
@@ -89,6 +169,14 @@ export default function index() {
         incrementVote={incrementVote}
         hideNews={hideNews}
         page={page}
+      />
+
+      <Chart
+        options={options}
+        series={series}
+        type="line"
+        width={"100%"}
+        height={"300px"}
       />
     </div>
   );
