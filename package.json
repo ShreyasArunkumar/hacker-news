@@ -24,7 +24,7 @@
     "eject": "react-scripts eject",
     "ssr": "node server/index.js",
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d server/index.js"
   },
   "eslintConfig": {
     "extends": "react-app"
