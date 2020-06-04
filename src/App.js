@@ -13,6 +13,7 @@ function App() {
 
   return (
     <>
+    <h1>Heading</h1>
       <p>{count}</p>
       <button onClick={increment}>Increment</button>
       <button onClick={decrement}>Decrement</button>
