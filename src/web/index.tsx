@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from "react";
 import Button from "./FormComponents/Button";
@@ -10,7 +11,7 @@ interface INews {}
 export default function index() {
   const [news, setNews] = useState<any>([]);
   const [searchString, setSearchString] = useState("react");
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
 
   async function getNews() {
@@ -21,14 +22,14 @@ export default function index() {
       res = await res.json();
       setInLocalStorage(searchString + page, JSON.stringify(res.hits));
       setNews(res.hits);
-      setLoading(false);
+      // setLoading(false);
     } catch (err) {
       console.log(err);
     }
   }
 
   function checkNews() {
-    setLoading(true);
+    // setLoading(true);
     const res = checkInLocalStorage(searchString + page);
     if (res === null) {
       getNews();
