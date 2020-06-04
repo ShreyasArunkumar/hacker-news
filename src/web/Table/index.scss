@@ -1,0 +1,43 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-height: 800px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+tr {
+  background-color: #f5f5ed;
+}
+
+tr:nth-child(even) {
+  background-color: #e5e5de;
+}
+
+th {
+  font-size: 14px;
+  font-weight: 400;
+  background-color: #f06506;
+  color: #fff;
+  vertical-align: bottom;
+}
+
+.news_feed__info {
+  color: #111;
+  font-size: 12px;
+
+  &_gray {
+    color: #a0a0a0;
+  }
+}
+
+.rotate90deg {
+  transform: rotate(180deg);
+  user-select: none;
+}

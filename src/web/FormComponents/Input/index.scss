@@ -1,0 +1,16 @@
+.news_feed__input {
+  background-color: transparent;
+  color: #111;
+  padding: 6px 12px;
+  border: unset;
+  border-bottom: 1px solid #111;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: #a2a2a2;
+  }
+}

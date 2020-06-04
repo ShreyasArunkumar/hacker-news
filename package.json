@@ -10,12 +10,15 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "date-fns": "^2.14.0",
     "express": "^4.17.1",
     "gh-pages": "^3.0.0",
     "ignore-styles": "^5.0.1",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "typescript": "^3.9.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -24,7 +27,7 @@
     "eject": "react-scripts eject",
     "ssr": "node server/index.js",
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -d server/index.js"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

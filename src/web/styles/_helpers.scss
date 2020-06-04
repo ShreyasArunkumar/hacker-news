@@ -1,0 +1,66 @@
+// typography related classes
+.heading-1 {
+  font-size: 34px;
+}
+
+.heading-3 {
+  font-size: 16px;
+}
+
+// color related classes
+.primary {
+  color: #f06506;
+}
+
+// Flex related classes
+.flex {
+  display: flex;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+// margin related classes
+.mt-16 {
+  margin-top: 16px;
+}
+
+.mr-16 {
+  margin-right: 16px;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+// other general classes
+.bold {
+  font-weight: 700;
+}
+
+.table_container {
+  max-width: 1120px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.wd100 {
+  width: 100%;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.pointer {
+  cursor: pointer;
+}

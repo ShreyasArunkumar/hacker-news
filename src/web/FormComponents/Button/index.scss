@@ -1,0 +1,18 @@
+.news_feed__button {
+  background-color: transparent;
+  color: #111;
+  padding: 6px 12px;
+  border: 1px solid #111;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #111;
+    color: #fff;
+  }
+
+  &:focus {
+    outline: none;
+    scale: transform(1.1);
+  }
+}
