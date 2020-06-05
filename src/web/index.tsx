@@ -38,6 +38,8 @@ export default function index() {
   const [news, setNews] = useState<any>([]);
   const [searchString, setSearchString] = useState("");
   const [page, setPage] = useState(0);
+
+  //chart related states
   const [options, updateOptions] = useState(op);
   const [series, updateSeries] = useState(se);
 
@@ -48,6 +50,7 @@ export default function index() {
           `https://hn.algolia.com/api/v1/search?query=${searchString}&page=${page}`
         );
         res = await res.json();
+        // set api res to the localStorage
         setInLocalStorage(searchString + page, JSON.stringify(res.hits));
         setNews(res.hits);
         updateCharts(res.hits);
@@ -61,6 +64,7 @@ export default function index() {
     let data: Array<number> = [];
     let categories: Array<string> = [];
 
+    // deconstruct the API data to match the charts API
     response.forEach((a: { points: number; author: string }) => {
       data.push(a.points);
       categories.push(a.author);
@@ -117,6 +121,7 @@ export default function index() {
 
   function checkNews() {
     let res = checkInLocalStorage(searchString + page);
+    // check of the API is already cached in the memory or not
     if (res === null) {
       getNews();
     } else {
@@ -128,12 +133,14 @@ export default function index() {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
+    // Onchange of search string or page refetch the data
     checkNews();
   }, [searchString, page]);
 
   function onSubmit(e: any) {
     e.preventDefault();
     const value = e.target.search.value;
+    //Update URL by adding search params
     window.location.href = `/?search=${value}&page=${0}`;
     setPage(0);
     setSearchString(value);
@@ -145,6 +152,7 @@ export default function index() {
     const search: string | null = urlParams.get("search");
     const page: string | null = urlParams.get("page");
 
+    // Check if url has already has any search params
     if (search) {
       setSearchString(search);
     } else {
@@ -154,18 +162,19 @@ export default function index() {
     if (page !== null) {
       setPage(parseInt(page));
     }
-
-    console.log(search, page);
   }, []);
 
+  // On click next increment the pagination count
   function onClickPrev() {
     window.location.href = `/?search=${searchString}&page=${page - 1}`;
   }
 
+  // On click prev decrements the pagination count
   function onClickNext() {
     window.location.href = `/?search=${searchString}&page=${page + 1}`;
   }
 
+  // on clicking vote fetch the data from the storage increment the object value and save back
   function incrementVote(id: number) {
     const newData = news;
     newData[id].points = news[id].points + 1;
@@ -173,6 +182,7 @@ export default function index() {
     checkNews();
   }
 
+  // on clicking hide fetch the data from the storage search and remove the object
   function hideNews(id: number) {
     const newData = news;
     newData.splice(id, 1);
@@ -182,15 +192,18 @@ export default function index() {
 
   return (
     <div className="table_container">
+      {/* simple heading */}
       <div className="text-center heading-1 primary bold mt-16 mb-16">
         Hacker News
       </div>
 
+      {/* Search for the news */}
       <form onSubmit={onSubmit} className="text-right mb-16">
         <Input name="search" defaultValue={searchString} className="mr-16" />
         <Button type="submit">Search</Button>
       </form>
 
+      {/* displaying the custom table */}
       <NewsTable
         data={news}
         onClickNext={onClickNext}
@@ -200,6 +213,7 @@ export default function index() {
         page={page}
       />
 
+      {/* display the storage data analytics */}
       <Chart
         options={options}
         series={series}
