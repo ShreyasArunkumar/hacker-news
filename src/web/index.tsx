@@ -36,21 +36,22 @@ export default function index() {
   const se: ChartData[] = [];
 
   const [news, setNews] = useState<any>([]);
-  const [searchString, setSearchString] = useState("react");
+  const [searchString, setSearchString] = useState("");
   const [page, setPage] = useState(0);
   const [options, updateOptions] = useState(op);
   const [series, updateSeries] = useState(se);
 
   async function getNews() {
     try {
-      let res: any = await fetch(
-        `https://hn.algolia.com/api/v1/search?query=${searchString}&page=${page}`
-      );
-      res = await res.json();
-      setInLocalStorage(searchString + page, JSON.stringify(res.hits));
-      setNews(res.hits);
-      updateCharts(res.hits);
-      // setLoading(false);
+      if (searchString !== "") {
+        let res: any = await fetch(
+          `https://hn.algolia.com/api/v1/search?query=${searchString}&page=${page}`
+        );
+        res = await res.json();
+        setInLocalStorage(searchString + page, JSON.stringify(res.hits));
+        setNews(res.hits);
+        updateCharts(res.hits);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -66,10 +67,12 @@ export default function index() {
     });
 
     updateOptions({
-      dataLabels: {
-        show: true,
+      chart: {
+        toolbar: {
+          show: false,
+        },
       },
-      toolbar: {
+      legend: {
         show: true,
       },
       grid: {
@@ -89,11 +92,17 @@ export default function index() {
         labels: {
           formatter: (a: number) => a,
         },
+        title: {
+          text: "Votes",
+        },
       },
       xaxis: {
         categories,
         labels: {
           show: true,
+        },
+        title: {
+          text: "Authors",
         },
       },
     });
@@ -107,7 +116,6 @@ export default function index() {
   }
 
   function checkNews() {
-    // setLoading(true);
     let res = checkInLocalStorage(searchString + page);
     if (res === null) {
       getNews();
@@ -125,16 +133,37 @@ export default function index() {
 
   function onSubmit(e: any) {
     e.preventDefault();
+    const value = e.target.search.value;
+    window.location.href = `/?search=${value}&page=${0}`;
     setPage(0);
-    setSearchString(e.target.search.value);
+    setSearchString(value);
   }
 
+  useEffect(() => {
+    const queryStrings = window.location.search;
+    const urlParams = new URLSearchParams(queryStrings);
+    const search: string | null = urlParams.get("search");
+    const page: string | null = urlParams.get("page");
+
+    if (search) {
+      setSearchString(search);
+    } else {
+      setSearchString("css");
+    }
+
+    if (page !== null) {
+      setPage(parseInt(page));
+    }
+
+    console.log(search, page);
+  }, []);
+
   function onClickPrev() {
-    setPage(page - 1);
+    window.location.href = `/?search=${searchString}&page=${page - 1}`;
   }
 
   function onClickNext() {
-    setPage(page + 1);
+    window.location.href = `/?search=${searchString}&page=${page + 1}`;
   }
 
   function incrementVote(id: number) {
