@@ -141,7 +141,7 @@ export default function index() {
     e.preventDefault();
     const value = e.target.search.value;
     //Update URL by adding search params
-    window.location.href = `/?search=${value}&page=${0}`;
+    window.location.href = `/hacker-news/?search=${value}&page=${0}`;
     setPage(0);
     setSearchString(value);
   }
@@ -166,12 +166,16 @@ export default function index() {
 
   // On click next increment the pagination count
   function onClickPrev() {
-    window.location.href = `/?search=${searchString}&page=${page - 1}`;
+    window.location.href = `/hacker-news/?search=${searchString}&page=${
+      page - 1
+    }`;
   }
 
   // On click prev decrements the pagination count
   function onClickNext() {
-    window.location.href = `/?search=${searchString}&page=${page + 1}`;
+    window.location.href = `/hacker-news/?search=${searchString}&page=${
+      page + 1
+    }`;
   }
 
   // on clicking vote fetch the data from the storage increment the object value and save back
